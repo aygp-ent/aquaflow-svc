@@ -1,0 +1,7 @@
+target/
+data/
+.mvn/apache-maven-*
+.mvn/maven.zip
+*.iml
+.idea/
+.vscode/
