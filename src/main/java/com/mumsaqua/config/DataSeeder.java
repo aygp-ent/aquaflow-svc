@@ -76,34 +76,28 @@ public class DataSeeder implements ApplicationRunner {
 
         // Seed raw materials if none exist (stock = 0)
         if (rawMaterialRepo.count() == 0) {
-            // Bottles
+            // Bottles (size-specific)
             rawMaterialRepo.save(RawMaterial.builder().name("Bottle 2L").type(RawMaterial.MaterialType.BOTTLE).bottleSize("2L").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
             rawMaterialRepo.save(RawMaterial.builder().name("Bottle 1L").type(RawMaterial.MaterialType.BOTTLE).bottleSize("1L").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
             rawMaterialRepo.save(RawMaterial.builder().name("Bottle 500ML").type(RawMaterial.MaterialType.BOTTLE).bottleSize("500ML").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
             rawMaterialRepo.save(RawMaterial.builder().name("Bottle 250ML").type(RawMaterial.MaterialType.BOTTLE).bottleSize("250ML").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
 
-            // Caps
-            rawMaterialRepo.save(RawMaterial.builder().name("Cap 2L").type(RawMaterial.MaterialType.CAP).bottleSize("2L").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
-            rawMaterialRepo.save(RawMaterial.builder().name("Cap 1L").type(RawMaterial.MaterialType.CAP).bottleSize("1L").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
-            rawMaterialRepo.save(RawMaterial.builder().name("Cap 500ML").type(RawMaterial.MaterialType.CAP).bottleSize("500ML").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
-            rawMaterialRepo.save(RawMaterial.builder().name("Cap 250ML").type(RawMaterial.MaterialType.CAP).bottleSize("250ML").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
-
-            // Stickers
+            // Stickers (size-specific)
             rawMaterialRepo.save(RawMaterial.builder().name("Sticker 2L").type(RawMaterial.MaterialType.STICKER).bottleSize("2L").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
             rawMaterialRepo.save(RawMaterial.builder().name("Sticker 1L").type(RawMaterial.MaterialType.STICKER).bottleSize("1L").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
             rawMaterialRepo.save(RawMaterial.builder().name("Sticker 500ML").type(RawMaterial.MaterialType.STICKER).bottleSize("500ML").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
             rawMaterialRepo.save(RawMaterial.builder().name("Sticker 250ML").type(RawMaterial.MaterialType.STICKER).bottleSize("250ML").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
 
-            // Packing
-            rawMaterialRepo.save(RawMaterial.builder().name("Packing 2L").type(RawMaterial.MaterialType.PACKING).bottleSize("2L").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
-            rawMaterialRepo.save(RawMaterial.builder().name("Packing 1L").type(RawMaterial.MaterialType.PACKING).bottleSize("1L").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
-            rawMaterialRepo.save(RawMaterial.builder().name("Packing 500ML").type(RawMaterial.MaterialType.PACKING).bottleSize("500ML").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
-            rawMaterialRepo.save(RawMaterial.builder().name("Packing 250ML").type(RawMaterial.MaterialType.PACKING).bottleSize("250ML").unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
+            // Cap (shared across all sizes)
+            rawMaterialRepo.save(RawMaterial.builder().name("Cap").type(RawMaterial.MaterialType.CAP).unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
 
-            // Cartridge (shared across sizes)
+            // Packing (shared across all sizes)
+            rawMaterialRepo.save(RawMaterial.builder().name("Packing").type(RawMaterial.MaterialType.PACKING).unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
+
+            // Cartridge Filter (shared)
             rawMaterialRepo.save(RawMaterial.builder().name("Cartridge Filter").type(RawMaterial.MaterialType.CARTRIDGE).unit(RawMaterial.MaterialUnit.PCS).currentStock(0).costPerUnit(BigDecimal.ZERO).build());
 
-            log.info("✓ Raw materials seeded: Bottles, Caps, Stickers, Packing (2L, 1L, 500ML, 250ML) + Cartridge");
+            log.info("✓ Raw materials seeded: Bottles (4 sizes), Stickers (4 sizes), Cap, Packing, Cartridge");
         }
     }
 }
