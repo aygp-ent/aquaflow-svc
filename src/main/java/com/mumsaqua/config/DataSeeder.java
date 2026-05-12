@@ -4,16 +4,19 @@ import com.mumsaqua.entity.*;
 import com.mumsaqua.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class DataSeeder implements CommandLineRunner {
+public class DataSeeder implements ApplicationRunner {
 
     private final AppUserRepository userRepo;
     private final FuelPriceRepository fuelPriceRepo;
@@ -22,7 +25,8 @@ public class DataSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void run(String... args) {
+    @Transactional
+    public void run(ApplicationArguments args) {
         // Seed default users if none exist
         if (userRepo.count() == 0) {
             userRepo.save(AppUser.builder()
