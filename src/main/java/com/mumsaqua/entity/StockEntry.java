@@ -30,6 +30,14 @@ public class StockEntry {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal totalCost;
 
+    @Column(nullable = false, precision = 10, scale = 2)
+    @Builder.Default
+    private BigDecimal transportCost = BigDecimal.ZERO;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    @Builder.Default
+    private BigDecimal miscCost = BigDecimal.ZERO;
+
     private String supplier;
     private String note;
 }

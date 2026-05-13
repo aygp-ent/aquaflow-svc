@@ -75,17 +75,24 @@ public class RawMaterialController {
         LocalDate date = LocalDate.parse(body.get("date").toString());
         int quantity = Integer.parseInt(body.get("quantity").toString());
         BigDecimal costPerUnit = new BigDecimal(body.get("costPerUnit").toString());
+        BigDecimal transportCost = body.get("transportCost") != null ? new BigDecimal(body.get("transportCost").toString()) : BigDecimal.ZERO;
+        BigDecimal miscCost = body.get("miscCost") != null ? new BigDecimal(body.get("miscCost").toString()) : BigDecimal.ZERO;
         String supplier = body.get("supplier") != null ? body.get("supplier").toString() : null;
         String note = body.get("note") != null ? body.get("note").toString() : null;
 
         RawMaterial material = materialRepo.findById(materialId).orElseThrow();
+
+        BigDecimal materialCost = costPerUnit.multiply(BigDecimal.valueOf(quantity));
+        BigDecimal totalCost = materialCost.add(transportCost).add(miscCost);
 
         StockEntry entry = StockEntry.builder()
                 .material(material)
                 .date(date)
                 .quantity(quantity)
                 .costPerUnit(costPerUnit)
-                .totalCost(costPerUnit.multiply(BigDecimal.valueOf(quantity)))
+                .transportCost(transportCost)
+                .miscCost(miscCost)
+                .totalCost(totalCost)
                 .supplier(supplier)
                 .note(note)
                 .build();
@@ -108,6 +115,8 @@ public class RawMaterialController {
         dto.put("date", e.getDate().toString());
         dto.put("quantity", e.getQuantity());
         dto.put("costPerUnit", e.getCostPerUnit());
+        dto.put("transportCost", e.getTransportCost());
+        dto.put("miscCost", e.getMiscCost());
         dto.put("totalCost", e.getTotalCost());
         dto.put("supplier", e.getSupplier());
         dto.put("note", e.getNote());
